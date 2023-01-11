@@ -7,11 +7,11 @@ http://udase-webap-b9oxdfbdq07m-645226916.us-east-1.elb.amazonaws.com/
 ## Outputs
 
 
-images/target_group.png
+<img src="images/target_group.png">
 
-images/udanetwork.png
+<img src="images/udanetwork.png">
 
-images/udaServer.png
+<img src="images/udaServer.png">
 
-images/webpage.png
+<img src="images/webpage.png">
 
