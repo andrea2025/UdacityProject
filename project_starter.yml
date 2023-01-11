@@ -135,6 +135,45 @@ Resources:
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
 
+  UdacityS3ReadOnlyEC2:
+        Type: AWS::IAM::Role
+        Properties:
+            RoleName: !Sub ${EnvironmentName}-Role
+            AssumeRolePolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                    - Effect: Allow
+                      Principal:
+                          Service:
+                              - ec2.amazonaws.com
+                      Action:
+                          - sts:AssumeRole
+            Path: "/"
+
+  RolePolicies:
+        Type: AWS::IAM::Policy
+        Properties:
+            PolicyName: AmazonS3ReadOnlyAccess
+            PolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                    - Effect: Allow
+                      Action:
+                          - s3:Get*
+                          - s3:List*
+                      Resource:
+                          - arn:aws:s3:::udagram-08903456
+                          - arn:aws:s3:::udagram-08903456/*
+            Roles:
+                - Ref: UdacityS3ReadOnlyEC2
+
+  ProfileWithRolesForOurApp:
+        Type: AWS::IAM::InstanceProfile
+        Properties:
+            Path: "/"
+            Roles:
+                - Ref: UdacityS3ReadOnlyEC2
+
 Outputs:
 
     LoadBalancerDNSNames:
